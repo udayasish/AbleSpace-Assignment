@@ -1,0 +1,27 @@
+# Explicit project name. Without it Compose derives one from the folder name
+# ("backend"), which collides with other projects and produces spurious
+# "orphan container" warnings.
+name: pyramid
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pyramid-postgres
+    environment:
+      POSTGRES_USER: pyramid
+      POSTGRES_PASSWORD: pyramid
+      POSTGRES_DB: pyramid
+    # Host port 5433 (not the default 5432) so this can run alongside other
+    # projects' Postgres containers without a port clash.
+    ports:
+      - "5433:5432"
+    volumes:
+      - pyramid_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pyramid -d pyramid"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pyramid_pgdata:
