@@ -27,7 +27,9 @@ export function LoginCard() {
     try {
       const { user } = await authService.guestLogin();
       dispatch(login({ userData: user }));
-      router.replace("/");
+      router.replace("/tasks");
+      // Drops the cached RSC payload from before the auth cookie existed.
+      router.refresh();
     } catch (err) {
       toast.error(
         err instanceof ApiError ? err.message : "Could not start a guest session",

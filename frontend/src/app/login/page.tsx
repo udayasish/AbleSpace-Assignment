@@ -5,7 +5,7 @@ import { BrandMark } from "@/components/brand-mark";
 
 export default async function LoginPage() {
   const cookieStore = await cookies();
-  if (cookieStore.has("access_token")) redirect("/");
+  if (cookieStore.has("access_token")) redirect("/tasks");
 
   return (
     <div className="flex flex-1 items-center justify-center p-6 md:p-10">

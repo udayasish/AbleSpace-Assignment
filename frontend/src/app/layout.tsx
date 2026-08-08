@@ -24,7 +24,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      {/* Browser extensions commonly inject body attributes before hydration. */}
+      <body suppressHydrationWarning className="min-h-full flex flex-col">
         <StoreProvider>
           <ThemeProvider>
             <AuthInit />

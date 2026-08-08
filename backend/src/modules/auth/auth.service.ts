@@ -8,6 +8,7 @@ import { parseDuration } from '../../common/parse-duration';
 import { DRIZZLE } from '../../database/database.module';
 import type { Database } from '../../database/database.module';
 import { refreshTokens, User } from '../../database/schema';
+import { TasksService } from '../tasks/tasks.service';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -17,10 +18,13 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly usersService: UsersService,
+    private readonly tasksService: TasksService,
   ) {}
 
   async guestLogin() {
     const user = await this.usersService.createGuest();
+    // Seed so a guest lands on a populated board rather than an empty one.
+    await this.tasksService.seedDemoTasks(user.id);
     const tokens = await this.issueTokens(user);
     return { user: this.sanitize(user), ...tokens };
   }
