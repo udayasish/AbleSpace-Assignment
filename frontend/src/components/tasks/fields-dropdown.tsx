@@ -46,7 +46,7 @@ export function FieldsDropdown({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" className="gap-1 rounded-md px-3 text-xs">
           <ListFilter className="size-4" />
           Fields
         </Button>

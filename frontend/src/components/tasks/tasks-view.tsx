@@ -109,7 +109,11 @@ export function TasksView() {
             <Filter className="size-4" />
           </Button>
 
-          <Button size="sm" onClick={() => openDialog("todo")}>
+          {/* Figma toolbar buttons: h-8, rounded-md, text-xs, gap-1, px-3. */}
+          <Button
+            className="gap-1 rounded-md px-3 text-xs"
+            onClick={() => openDialog("todo")}
+          >
             <Plus className="size-4" />
             Add Task
           </Button>

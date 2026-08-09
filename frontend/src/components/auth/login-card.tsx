@@ -47,12 +47,19 @@ export function LoginCard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <Button className="w-full" onClick={continueAsGuest} disabled={pending}>
+        {/* Figma login buttons: h-9, rounded-4xl, text-sm (larger than app buttons). */}
+        <Button
+          size="lg"
+          className="w-full rounded-4xl px-3 text-sm"
+          onClick={continueAsGuest}
+          disabled={pending}
+        >
           {pending ? "Starting session…" : "Continue as Guest"}
         </Button>
         <Button
           variant="outline"
-          className="w-full"
+          size="lg"
+          className="w-full rounded-4xl px-3 text-sm"
           disabled={pending}
           onClick={() => toast("Google login is not available in this demo")}
         >
