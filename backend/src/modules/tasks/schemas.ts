@@ -19,7 +19,10 @@ export const createTaskSchema = z.object({
   labels: z.array(z.string().min(1).max(40)).max(10).default([]),
 });
 
-export const updateTaskSchema = createTaskSchema.partial();
+/** `position` is settable only on update — creates always append to the column. */
+export const updateTaskSchema = createTaskSchema
+  .partial()
+  .extend({ position: z.number().optional() });
 
 export const listTasksQuerySchema = z.object({
   status: z.enum(taskStatuses).optional(),

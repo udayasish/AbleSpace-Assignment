@@ -46,4 +46,5 @@ export interface CreateTaskInput {
   labels?: string[];
 }
 
-export type UpdateTaskInput = Partial<CreateTaskInput>;
+/** `position` is update-only — creates always append to the column. */
+export type UpdateTaskInput = Partial<CreateTaskInput> & { position?: number };

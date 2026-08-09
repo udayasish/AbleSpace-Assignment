@@ -1,5 +1,7 @@
 "use client";
 
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { MoreHorizontal, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { DueDateBadge } from "@/components/tasks/due-date-badge";
@@ -12,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { tasksService } from "@/lib/tasks-service";
+import { cn } from "@/lib/utils";
 import { removeTask } from "@/store/tasksSlice";
 import { useAppDispatch } from "@/store/hooks";
 import type { Task } from "@/types/api";
@@ -19,6 +22,14 @@ import type { Task } from "@/types/api";
 /** Figma: 273px fixed, rounded-md, 1px border, bg background, p-3, gap-2. */
 export function TaskCard({ task }: { task: Task }) {
   const dispatch = useAppDispatch();
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: task.id, data: { status: task.status } });
 
   const onDelete = async () => {
     try {
@@ -30,9 +41,20 @@ export function TaskCard({ task }: { task: Task }) {
   };
 
   return (
-    <div className="bg-background flex w-[273px] flex-col gap-2 rounded-md border p-3">
+    <div
+      ref={setNodeRef}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
+      className={cn(
+        "bg-background flex w-[273px] flex-col gap-2 rounded-md border p-3",
+        isDragging && "opacity-50",
+      )}
+    >
       <div className="flex items-start justify-between gap-2">
-        <p className="text-accent-foreground text-sm font-medium">
+        <p
+          {...attributes}
+          {...listeners}
+          className="text-accent-foreground flex-1 cursor-grab text-sm font-medium active:cursor-grabbing"
+        >
           {task.title}
         </p>
         <DropdownMenu>

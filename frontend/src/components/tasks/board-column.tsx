@@ -1,8 +1,14 @@
 "use client";
 
+import { useDroppable } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { GripVertical, MoreHorizontal, Plus } from "lucide-react";
 import { TaskCard } from "@/components/tasks/task-card";
 import { STATUS_LABELS } from "@/lib/task-constants";
+import { cn } from "@/lib/utils";
 import type { Task, TaskStatus } from "@/types/api";
 
 interface Props {
@@ -13,8 +19,20 @@ interface Props {
 
 /** Figma: 289px fixed, rounded-md, 1px border, bg accent (#F5F5F5), p-2. */
 export function BoardColumn({ status, tasks, onAddTask }: Props) {
+  // Droppable id is prefixed so an empty column is still a valid drop target.
+  const { setNodeRef, isOver } = useDroppable({
+    id: `column-${status}`,
+    data: { status },
+  });
+
   return (
-    <div className="bg-accent flex h-fit w-[289px] shrink-0 flex-col gap-2 rounded-md border p-2">
+    <div
+      ref={setNodeRef}
+      className={cn(
+        "bg-accent flex h-fit min-h-32 w-[289px] shrink-0 flex-col gap-2 rounded-md border p-2",
+        isOver && "ring-ring/50 ring-2",
+      )}
+    >
       <div className="text-muted-foreground flex items-center gap-1 px-1 text-xs font-medium">
         <GripVertical className="size-3.5" />
         <span className="text-foreground">{STATUS_LABELS[status]}</span>
@@ -31,9 +49,14 @@ export function BoardColumn({ status, tasks, onAddTask }: Props) {
         </button>
       </div>
 
-      {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} />
-      ))}
+      <SortableContext
+        items={tasks.map((task) => task.id)}
+        strategy={verticalListSortingStrategy}
+      >
+        {tasks.map((task) => (
+          <TaskCard key={task.id} task={task} />
+        ))}
+      </SortableContext>
 
       <button
         type="button"
