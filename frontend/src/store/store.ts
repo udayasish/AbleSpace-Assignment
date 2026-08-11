@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
+import projectsSlice from "./projectsSlice";
 import tasksSlice from "./tasksSlice";
 
 export const makeStore = () =>
@@ -7,6 +8,7 @@ export const makeStore = () =>
     reducer: {
       auth: authSlice,
       tasks: tasksSlice,
+      projects: projectsSlice,
     },
   });
 

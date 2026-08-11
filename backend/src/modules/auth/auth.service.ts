@@ -8,6 +8,7 @@ import { parseDuration } from '../../common/parse-duration';
 import { DRIZZLE } from '../../database/database.module';
 import type { Database } from '../../database/database.module';
 import { refreshTokens, User } from '../../database/schema';
+import { ProjectsService } from '../projects/projects.service';
 import { TasksService } from '../tasks/tasks.service';
 import { UsersService } from '../users/users.service';
 
@@ -19,12 +20,14 @@ export class AuthService {
     private readonly config: ConfigService,
     private readonly usersService: UsersService,
     private readonly tasksService: TasksService,
+    private readonly projectsService: ProjectsService,
   ) {}
 
   async guestLogin() {
     const user = await this.usersService.createGuest();
-    // Seed so a guest lands on a populated board rather than an empty one.
+    // Seed so a guest lands on populated screens rather than empty ones.
     await this.tasksService.seedDemoTasks(user.id);
+    await this.projectsService.seedDemoProjects(user.id);
     const tokens = await this.issueTokens(user);
     return { user: this.sanitize(user), ...tokens };
   }

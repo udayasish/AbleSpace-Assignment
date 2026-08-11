@@ -15,6 +15,20 @@
       "when": 1786191808312,
       "tag": "0001_noisy_alice",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1786348822919,
+      "tag": "0002_faithful_mindworm",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1786428570510,
+      "tag": "0003_loving_human_cannonball",
+      "breakpoints": true
     }
   ]
 }

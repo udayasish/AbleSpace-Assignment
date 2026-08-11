@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown, MoreHorizontal, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
 import { PriorityIndicator } from "@/components/tasks/priority-indicator";
 import { TaskLabelChip } from "@/components/tasks/task-label-chip";
@@ -71,8 +72,9 @@ function StatusGroup({
       </CollapsibleTrigger>
 
       <CollapsibleContent>
-        <div className="overflow-hidden rounded-md border">
-          <table className="w-full border-collapse text-sm">
+        {/* Table scrolls within its own box so the page never overflows. */}
+        <div className="overflow-x-auto rounded-md border">
+          <table className="w-full min-w-[720px] border-collapse text-sm">
             <thead>
               <tr className="bg-accent border-b">
                 <th className="text-muted-foreground h-12 px-3 text-left font-medium">
@@ -111,7 +113,11 @@ function StatusGroup({
             <tbody>
               {tasks.map((task) => (
                 <tr key={task.id} className="border-b last:border-b-0">
-                  <td className="h-12 px-3">{task.title}</td>
+                  <td className="h-12 px-3">
+                    <Link href={`/tasks/${task.id}`} className="hover:underline">
+                      {task.title}
+                    </Link>
+                  </td>
                   {fields.priority && (
                     <td className="h-12 px-3">
                       <PriorityIndicator priority={task.priority} />

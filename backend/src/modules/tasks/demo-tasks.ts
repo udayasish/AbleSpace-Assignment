@@ -1,4 +1,4 @@
-import type { CreateTaskDto } from './schemas';
+import type { CreateSubtaskDto, CreateTaskDto } from './schemas';
 
 /** Copy taken from the Figma board so a guest's first view matches the design. */
 export const demoTasks: CreateTaskDto[] = [
@@ -75,6 +75,28 @@ export const demoTasks: CreateTaskDto[] = [
     labels: ['Development'],
   },
 ];
+
+/** Subtasks for the first demo task — the one the Figma detail screen shows. */
+export const demoSubtasks: CreateSubtaskDto[] = [
+  {
+    title: 'Draft the endpoint reference',
+    priority: 'high',
+    assigneeLabel: 'Admin',
+  },
+  {
+    title: 'Add request and response examples',
+    priority: 'low',
+    assigneeLabel: 'Dev Team',
+  },
+  {
+    title: 'Review with the team',
+    priority: 'medium',
+    assigneeLabel: 'QA Team',
+  },
+];
+
+export const demoComment =
+  'Starting with the inventory endpoints — the sales metrics section needs the new filters documented too.';
 
 /** Due dates are relative so seeded data never looks stale. */
 export function demoDueDate(index: number): Date {

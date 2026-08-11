@@ -48,3 +48,58 @@ export interface CreateTaskInput {
 
 /** `position` is update-only — creates always append to the column. */
 export type UpdateTaskInput = Partial<CreateTaskInput> & { position?: number };
+
+export interface Subtask {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  taskId: string;
+  title: string;
+  priority: TaskPriority;
+  assigneeLabel: string | null;
+  dueDate: string | null;
+  position: number;
+}
+
+export interface TaskComment {
+  id: string;
+  createdAt: string;
+  body: string;
+  authorId: string;
+  authorName: string | null;
+}
+
+export interface TaskDetail extends Task {
+  subtasks: Subtask[];
+  comments: TaskComment[];
+}
+
+export interface CreateSubtaskInput {
+  title: string;
+  priority?: TaskPriority;
+  assigneeLabel?: string;
+  dueDate?: string;
+}
+
+export type UpdateSubtaskInput = Partial<CreateSubtaskInput>;
+
+export interface Project {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  ownerId: string;
+  name: string;
+  priority: TaskPriority;
+  leadLabel: string | null;
+  dueDate: string | null;
+  position: number;
+}
+
+export interface CreateProjectInput {
+  name: string;
+  priority?: TaskPriority;
+  leadLabel?: string;
+  dueDate?: string;
+}
+
+export type UpdateProjectInput = Partial<CreateProjectInput>;

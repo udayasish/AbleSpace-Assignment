@@ -3,6 +3,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { MoreHorizontal, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
 import { DueDateBadge } from "@/components/tasks/due-date-badge";
 import { TaskLabelChip } from "@/components/tasks/task-label-chip";
@@ -50,13 +51,15 @@ export function TaskCard({ task }: { task: Task }) {
       )}
     >
       <div className="flex items-start justify-between gap-2">
-        <p
+        {/* The 5px drag threshold lets this stay a real link: click opens, drag moves. */}
+        <Link
+          href={`/tasks/${task.id}`}
           {...attributes}
           {...listeners}
-          className="text-accent-foreground flex-1 cursor-grab text-sm font-medium active:cursor-grabbing"
+          className="text-accent-foreground flex-1 cursor-grab text-sm font-medium hover:underline active:cursor-grabbing"
         >
           {task.title}
-        </p>
+        </Link>
         <DropdownMenu>
           <DropdownMenuTrigger className="text-muted-foreground hover:text-foreground shrink-0">
             <MoreHorizontal className="size-4" />

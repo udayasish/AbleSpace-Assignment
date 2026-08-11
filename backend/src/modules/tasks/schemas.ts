@@ -31,6 +31,23 @@ export const listTasksQuerySchema = z.object({
 
 export const taskIdSchema = z.uuid();
 
+export const createSubtaskSchema = z.object({
+  title: z.string().min(1).max(255),
+  priority: z.enum(taskPriorities).default('none'),
+  assigneeLabel: z.string().max(60).optional(),
+  dueDate: z.iso.datetime().optional(),
+});
+
+export const updateSubtaskSchema = createSubtaskSchema.partial();
+
+export const createCommentSchema = z.object({
+  body: z.string().min(1).max(5000),
+});
+
+export type CreateSubtaskDto = z.infer<typeof createSubtaskSchema>;
+export type UpdateSubtaskDto = z.infer<typeof updateSubtaskSchema>;
+export type CreateCommentDto = z.infer<typeof createCommentSchema>;
+
 export type CreateTaskDto = z.infer<typeof createTaskSchema>;
 export type UpdateTaskDto = z.infer<typeof updateTaskSchema>;
 export type ListTasksQuery = z.infer<typeof listTasksQuerySchema>;

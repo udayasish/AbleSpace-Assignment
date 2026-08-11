@@ -41,12 +41,15 @@ export function LoginCard() {
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle className="text-xl">Let&apos;s get back on track</CardTitle>
+        {/* Figma: text-xl / leading-none / semibold / base/card-foreground. */}
+        <CardTitle className="text-xl leading-none font-semibold">
+          Let&apos;s get back on track
+        </CardTitle>
         <CardDescription>
           Enter your email below to login to your account.
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4">
+      <CardContent className="grid gap-3">
         {/* Figma login buttons: h-9, rounded-4xl, text-sm (larger than app buttons). */}
         <Button
           size="lg"

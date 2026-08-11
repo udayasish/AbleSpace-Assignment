@@ -58,11 +58,12 @@ export function TasksView() {
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
-      <div className="flex items-center justify-between gap-2">
+    // min-w-0 lets the scroll boxes shrink; flex children default to min-width:auto.
+    <div className="flex min-w-0 flex-1 flex-col gap-4 p-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-semibold">Tasks</h1>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {searching ? (
             <div className="relative">
               <Search className="text-muted-foreground absolute top-1/2 left-2.5 size-4 -translate-y-1/2" />
@@ -71,7 +72,7 @@ export function TasksView() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search tasks…"
-                className="h-8 w-56 pl-8"
+                className="h-8 w-full pl-8 sm:w-56"
               />
               <button
                 type="button"

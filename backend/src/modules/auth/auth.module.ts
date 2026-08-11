@@ -4,6 +4,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import type { JwtSignOptions } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { ProjectsModule } from '../projects/projects.module';
 import { TasksModule } from '../tasks/tasks.module';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
@@ -15,6 +16,7 @@ import { JwtStrategy } from './jwt.strategy';
   imports: [
     UsersModule,
     TasksModule,
+    ProjectsModule,
     PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
