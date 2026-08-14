@@ -29,6 +29,13 @@
       "when": 1786428570510,
       "tag": "0003_loving_human_cannonball",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1786437457935,
+      "tag": "0004_white_jack_power",
+      "breakpoints": true
     }
   ]
 }

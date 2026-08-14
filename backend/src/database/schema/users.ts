@@ -3,6 +3,16 @@ import { commonFields } from './common';
 
 export const themeModeEnum = pgEnum('theme_mode', ['light', 'dark']);
 
+/** Accent palette from the design's Color Mode menu. */
+export const accentColorEnum = pgEnum('accent_color', [
+  'amber',
+  'blue',
+  'pink',
+  'rose',
+  'emerald',
+  'black',
+]);
+
 /** Registered and guest users share this table; guests have no email/password. */
 export const users = pgTable('users', {
   ...commonFields,
@@ -17,6 +27,7 @@ export const users = pgTable('users', {
 
   isGuest: boolean('is_guest').notNull().default(false),
   themeMode: themeModeEnum('theme_mode').notNull().default('light'),
+  accentColor: accentColorEnum('accent_color').notNull().default('blue'),
 });
 
 export type User = typeof users.$inferSelect;

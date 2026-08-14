@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { AuthInit } from "@/components/auth/auth-init";
+import { PreferencesProvider } from "@/components/preferences-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { StoreProvider } from "@/store/StoreProvider";
@@ -24,13 +25,23 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Paints the saved accent before first render so it never flashes. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var a=localStorage.getItem('pyramid-accent');if(a)document.documentElement.dataset.accent=a}catch(e){}`,
+          }}
+        />
+      </head>
       {/* Browser extensions commonly inject body attributes before hydration. */}
       <body suppressHydrationWarning className="min-h-full flex flex-col">
         <StoreProvider>
           <ThemeProvider>
-            <AuthInit />
-            {children}
-            <Toaster />
+            <PreferencesProvider>
+              <AuthInit />
+              {children}
+              <Toaster />
+            </PreferencesProvider>
           </ThemeProvider>
         </StoreProvider>
       </body>

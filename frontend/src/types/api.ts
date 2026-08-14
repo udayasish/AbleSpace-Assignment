@@ -1,5 +1,14 @@
 export type ThemeMode = "light" | "dark";
 
+/** Accent palette from the design's Color Mode menu. */
+export type AccentColor =
+  | "amber"
+  | "blue"
+  | "pink"
+  | "rose"
+  | "emerald"
+  | "black";
+
 export interface User {
   id: string;
   createdAt: string;
@@ -11,6 +20,16 @@ export interface User {
   avatarUrl: string | null;
   isGuest: boolean;
   themeMode: ThemeMode;
+  accentColor: AccentColor;
+}
+
+export interface UpdateProfileInput {
+  name?: string;
+  username?: string;
+  title?: string;
+  email?: string;
+  themeMode?: ThemeMode;
+  accentColor?: AccentColor;
 }
 
 export interface AuthResponse {

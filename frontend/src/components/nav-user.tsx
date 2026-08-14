@@ -1,8 +1,12 @@
 "use client";
 
 import { ChevronsUpDown, LogOut, Moon, Settings, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import {
+  ACCENT_OPTIONS,
+  usePreferences,
+} from "@/components/preferences-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -23,6 +27,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { authService } from "@/lib/auth-service";
+import { cn } from "@/lib/utils";
 import { logout } from "@/store/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
@@ -33,7 +38,7 @@ function initials(name: string) {
 export function NavUser() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { theme, setTheme } = useTheme();
+  const { accent, setAccent, themeMode, setThemeMode } = usePreferences();
   const user = useAppSelector((state) => state.auth.userData);
 
   const signOut = async () => {
@@ -100,23 +105,51 @@ export function NavUser() {
                     <DropdownMenuLabel className="text-muted-foreground text-xs">
                       Theme
                     </DropdownMenuLabel>
-                    <DropdownMenuItem onClick={() => setTheme("light")}>
+                    <DropdownMenuItem onClick={() => setThemeMode("light")}>
                       <Sun className="size-4" />
                       Light
-                      {theme === "light" && <CheckMark />}
+                      {themeMode === "light" && <CheckMark />}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    <DropdownMenuItem onClick={() => setThemeMode("dark")}>
                       <Moon className="size-4" />
                       Dark
-                      {theme === "dark" && <CheckMark />}
+                      {themeMode === "dark" && <CheckMark />}
                     </DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
 
-              <DropdownMenuItem disabled>
-                <Settings className="size-4" />
-                Settings
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <span className="bg-primary size-4 rounded-sm" />
+                  Color Mode
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent sideOffset={8} className="min-w-48">
+                    <DropdownMenuLabel className="text-muted-foreground text-xs">
+                      Color Mode
+                    </DropdownMenuLabel>
+                    {ACCENT_OPTIONS.map((option) => (
+                      <DropdownMenuItem
+                        key={option.value}
+                        onClick={() => setAccent(option.value)}
+                      >
+                        <span
+                          className={cn("size-4 rounded-sm", option.swatch)}
+                        />
+                        {option.label}
+                        {accent === option.value && <CheckMark />}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+
+              <DropdownMenuItem asChild>
+                <Link href="/settings/profile">
+                  <Settings className="size-4" />
+                  Settings
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
 

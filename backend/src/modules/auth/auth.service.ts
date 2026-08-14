@@ -12,6 +12,9 @@ import { ProjectsService } from '../projects/projects.service';
 import { TasksService } from '../tasks/tasks.service';
 import { UsersService } from '../users/users.service';
 
+/** How long a just-rotated token still counts as a race rather than theft. */
+const REUSE_GRACE_MS = 10_000;
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -41,12 +44,17 @@ export class AuthService {
     if (!row) throw new UnauthorizedError('Invalid refresh token');
 
     // A revoked token being replayed means it was stolen — kill every session.
+    // Separate tabs can rotate at the same moment though, so a replay within
+    // the grace window is treated as that race and simply gets a fresh pair.
     if (row.revokedAt) {
-      await this.db
-        .update(refreshTokens)
-        .set({ revokedAt: new Date() })
-        .where(eq(refreshTokens.userId, row.userId));
-      throw new UnauthorizedError('Refresh token reuse detected');
+      const age = Date.now() - row.revokedAt.getTime();
+      if (age > REUSE_GRACE_MS) {
+        await this.db
+          .update(refreshTokens)
+          .set({ revokedAt: new Date() })
+          .where(eq(refreshTokens.userId, row.userId));
+        throw new UnauthorizedError('Refresh token reuse detected');
+      }
     }
     if (row.expiresAt < new Date()) {
       throw new UnauthorizedError('Refresh token expired');

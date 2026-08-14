@@ -15,6 +15,25 @@ interface ApiOptions extends Omit<RequestInit, "body"> {
 }
 
 /**
+ * Rotation revokes the old refresh token, so two requests that 401 together
+ * would replay it and trip the server's reuse detection — which kills every
+ * session. Sharing one in-flight rotation keeps concurrent callers to a single
+ * refresh.
+ */
+let rotating: Promise<boolean> | null = null;
+
+function refreshSession() {
+  rotating ??= fetch("/api/auth/refresh", { method: "POST" })
+    .then((res) => res.ok)
+    .catch(() => false)
+    .finally(() => {
+      rotating = null;
+    });
+
+  return rotating;
+}
+
+/**
  * Calls the backend through the Next rewrite at /api, so cookies stay
  * first-party. Unwraps `{ data }` and throws ApiError from `{ error }`.
  */
@@ -33,8 +52,7 @@ export async function apiFetch<T>(
 
   // Access token expired — rotate once, then replay the original request.
   if (res.status === 401 && !_retried && path !== "/auth/refresh") {
-    const refreshed = await fetch("/api/auth/refresh", { method: "POST" });
-    if (refreshed.ok) {
+    if (await refreshSession()) {
       return apiFetch<T>(path, { body, headers, ...init, _retried: true });
     }
   }

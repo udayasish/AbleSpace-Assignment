@@ -118,6 +118,89 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/*
+ * Accent palette from the design's Color Mode menu. Only the brand tokens move;
+ * everything else stays neutral. "black" is the default, so it sets nothing and
+ * falls through to :root / .dark above.
+ *
+ * Light uses the 600 shade, dark the 500, so contrast holds either way. The
+ * .dark[data-accent] rules must out-specify the plain [data-accent] ones.
+ */
+[data-accent="amber"] {
+  --primary: oklch(0.666 0.179 58.318);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.666 0.179 58.318);
+  --sidebar-primary: oklch(0.666 0.179 58.318);
+  --sidebar-ring: oklch(0.666 0.179 58.318);
+}
+.dark[data-accent="amber"] {
+  --primary: oklch(0.769 0.188 70.08);
+  --primary-foreground: oklch(0.205 0 0);
+  --ring: oklch(0.769 0.188 70.08);
+  --sidebar-primary: oklch(0.769 0.188 70.08);
+  --sidebar-ring: oklch(0.769 0.188 70.08);
+}
+
+[data-accent="blue"] {
+  --primary: oklch(0.546 0.245 262.881);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.546 0.245 262.881);
+  --sidebar-primary: oklch(0.546 0.245 262.881);
+  --sidebar-ring: oklch(0.546 0.245 262.881);
+}
+.dark[data-accent="blue"] {
+  --primary: oklch(0.623 0.214 259.815);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.623 0.214 259.815);
+  --sidebar-primary: oklch(0.623 0.214 259.815);
+  --sidebar-ring: oklch(0.623 0.214 259.815);
+}
+
+[data-accent="pink"] {
+  --primary: oklch(0.592 0.249 0.584);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.592 0.249 0.584);
+  --sidebar-primary: oklch(0.592 0.249 0.584);
+  --sidebar-ring: oklch(0.592 0.249 0.584);
+}
+.dark[data-accent="pink"] {
+  --primary: oklch(0.656 0.241 354.308);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.656 0.241 354.308);
+  --sidebar-primary: oklch(0.656 0.241 354.308);
+  --sidebar-ring: oklch(0.656 0.241 354.308);
+}
+
+[data-accent="rose"] {
+  --primary: oklch(0.586 0.253 17.585);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.586 0.253 17.585);
+  --sidebar-primary: oklch(0.586 0.253 17.585);
+  --sidebar-ring: oklch(0.586 0.253 17.585);
+}
+.dark[data-accent="rose"] {
+  --primary: oklch(0.645 0.246 16.439);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.645 0.246 16.439);
+  --sidebar-primary: oklch(0.645 0.246 16.439);
+  --sidebar-ring: oklch(0.645 0.246 16.439);
+}
+
+[data-accent="emerald"] {
+  --primary: oklch(0.596 0.145 163.225);
+  --primary-foreground: oklch(0.985 0 0);
+  --ring: oklch(0.596 0.145 163.225);
+  --sidebar-primary: oklch(0.596 0.145 163.225);
+  --sidebar-ring: oklch(0.596 0.145 163.225);
+}
+.dark[data-accent="emerald"] {
+  --primary: oklch(0.696 0.17 162.48);
+  --primary-foreground: oklch(0.205 0 0);
+  --ring: oklch(0.696 0.17 162.48);
+  --sidebar-primary: oklch(0.696 0.17 162.48);
+  --sidebar-ring: oklch(0.696 0.17 162.48);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
