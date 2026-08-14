@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pyramid frontend
 
-## Getting Started
+This folder contains the Next.js frontend for Pyramid.
 
-First, run the development server:
+## Main features
+
+- Guest login.
+- Task board and list views.
+- Task details with subtasks and comments.
+- Projects and project details.
+- Profile settings, light/dark mode, and accent colours.
+- Responsive layouts for desktop, tablet, and mobile.
+
+## Run locally
 
 ```bash
+npm install
+copy .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variable
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+BACKEND_URL=http://127.0.0.1:4000
+```
 
-## Learn More
+`BACKEND_URL` is used by Next.js to forward `/api/*` requests to the backend. In production, set it to the deployed backend URL without adding `:4000`.
 
-To learn more about Next.js, take a look at the following resources:
+## Main folders
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+src/app/          Pages and route layouts
+src/components/   Reusable UI components
+src/lib/          API and service helpers
+src/store/        Redux Toolkit store and slices
+```
